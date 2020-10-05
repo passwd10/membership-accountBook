@@ -1,9 +1,12 @@
 const express = require('express');
 const router = express.Router();
 
-router.post('/', (req, res) => {
-  console.log('hi');
-  res.send('hello world');
+const { isExistUser } = require('../models/users');
+
+router.post('/', async (req, res) => {
+  const { userId, userPassword } = req.body;
+  const isExist = await isExistUser(userId, userPassword);
+  res.send(isExist);
 });
 
 module.exports = router;
