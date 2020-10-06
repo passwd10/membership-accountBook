@@ -1,15 +1,25 @@
-const mysql = require('mysql2/promise');
+const Sequelize = require('sequelize');
 
 require('dotenv').config();
 
-const dbConfig = {
+const db = {};
+const config = {
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASS,
   database: process.env.DB_DATABASE,
-  connectionLimit: 10,
+  dialect: process.env.DB_DIALECT,
 };
 
-const pool = mysql.createPool(dbConfig);
+const sequelize = new Sequelize(
+  config.database, config.user, config.password, config,
+);
 
-module.exports = pool;
+db.sequelize = sequelize;
+db.Sequelize = Sequelize;
+
+db.Users = require('./users')(sequelize, Sequelize);
+
+sequelize.sync();
+
+module.exports = db;
