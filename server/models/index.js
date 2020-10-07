@@ -21,6 +21,7 @@ db.Sequelize = Sequelize;
 db.Users = require('./users')(sequelize, Sequelize);
 db.Categories = require('./categories')(sequelize, Sequelize);
 db.PaymentMethods = require('./paymentMethods')(sequelize, Sequelize);
+db.Transactions = require('./transactions')(sequelize, Sequelize);
 
 
 sequelize.sync();
