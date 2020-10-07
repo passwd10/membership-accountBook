@@ -25,5 +25,6 @@ db.Transactions = require('./transactions')(sequelize, Sequelize);
 
 
 sequelize.sync();
+console.log('All models were synchronized successfully.');
 
 module.exports = db;
