@@ -1,29 +1,36 @@
 const passport = require('passport');
-const JwtStrategy = require('passport-jwt').Strategy;
-const ExtractJwt = require('passport-jwt').ExtractJwt;
-const { isExistUser } = require('../services/users');
+const { Strategy: LocalStrategy } = require('passport-local');
+
+const { Users } = require('../models');
 
 require('dotenv').config();
 
 const passportConfig = {
-  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-  secretOrKey: process.env.JWT_SECRET,
+  usernameField: 'userId',
+  passwordField: 'userPassword',
 };
 
 const verifyUser = async (userId, userPassword, done) => {
   try {
-    const existUser = await isExistUser(userId, userPassword);
+    const user = await Users.findOne({ where: { id: userId } });
 
-    if (existUser) {
-      return done(null, true);
+    if (!user) {
+      return done(null, false, { reason: '존재하지 않는 사용자 입니다' });
     }
 
-    done(null, false);
+    const isCorrectPassword = userPassword === user.password;
+
+    if (isCorrectPassword) {
+      return done(null, user);
+    }
+
+    return done(null, false, { reason: '올바르지 않은 비밀번호 입니다.' });
   } catch (error) {
     console.error(error);
     done(error);
   }
 };
 
-passport.use(new JwtStrategy(passportConfig, verifyUser));
-passport.initialize();
+module.exports = () => {
+  passport.use('local', new LocalStrategy(passportConfig, verifyUser));
+};
