@@ -1,4 +1,5 @@
 import { signIn } from '../../apis/auth';
+import { addTransactions } from '../../apis/transactions';
 
 export default function LoginPage() {
   const loginPage = document.createElement('div');
@@ -22,9 +23,13 @@ export default function LoginPage() {
       <button class='sign_button sign_up'>
         회원가입
       </button>
+      <button class='test'>
+        TEST
+      </button>
     `;
 
     const loginButton = loginPage.querySelector('.sign_in');
+    const testButton = loginPage.querySelector('.test');
 
     const loginEvent = async () => {
       const userInfo = { userId: '', userPassword: '' };
@@ -44,7 +49,12 @@ export default function LoginPage() {
       await signIn(userInfo);
     };
 
+    const testEvent = async () => {
+      await addTransactions();
+    };
+
     loginButton.addEventListener('click', loginEvent);
+    testButton.addEventListener('click', testEvent);
 
     return loginPage;
   };

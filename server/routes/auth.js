@@ -1,12 +1,14 @@
 const express = require('express');
 const router = express.Router();
 
-const { isExistUser } = require('../services/users');
-
-router.post('/', async (req, res) => {
-  const { userId, userPassword } = req.body;
-  const isExist = await isExistUser(userId, userPassword);
-  res.send(isExist);
-});
+router.post('/', (req, res, next) => {
+  try {
+    res.json({ result: true });
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+},
+);
 
 module.exports = router;

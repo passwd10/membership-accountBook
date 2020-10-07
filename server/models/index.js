@@ -18,8 +18,22 @@ const sequelize = new Sequelize(
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-db.Users = require('./users')(sequelize, Sequelize);
+const Users = require('./users')(sequelize, Sequelize);
+const Categories = require('./categories')(sequelize, Sequelize);
+const PaymentMethods = require('./paymentMethods')(sequelize, Sequelize);
+const Transactions = require('./transactions')(sequelize, Sequelize);
+
+Transactions.belongsTo(Users);
+Transactions.belongsTo(Categories);
+Transactions.belongsTo(PaymentMethods);
+
+db.Users = Users;
+db.Categories = Categories;
+db.PaymentMethods = PaymentMethods;
+db.Transactions = Transactions;
+
 
 sequelize.sync();
+console.log('All models were synchronized successfully.');
 
 module.exports = db;
