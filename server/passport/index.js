@@ -19,7 +19,6 @@ const JWTConfig = {
 const verifyUser = async (userId, userPassword, done) => {
   try {
     const user = await Users.findOne({ where: { id: userId } });
-
     if (!user) {
       return done(null, false, { reason: '존재하지 않는 사용자 입니다' });
     }

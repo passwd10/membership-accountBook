@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-router.post('/', async (req, res, next) => {
+router.post('/', (req, res, next) => {
   try {
     res.json({ result: true });
   } catch (error) {

@@ -25,7 +25,7 @@ router.post('/', async(req, res, next) => {
           auth: user.auth,
         }, process.env.JWT_SECRET);
 
-        res.cookie('token', token, { httpOnly: true });
+        res.cookie('token', token);
         res.json({ token });
       });
     })(req, res);
