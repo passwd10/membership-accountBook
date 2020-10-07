@@ -6,6 +6,7 @@ const passport = require('passport');
 const passportConfig = require('./passport');
 
 const authRouter = require('./routes/auth');
+const signInRouter = require('./routes/signIn');
 
 const app = express();
 
@@ -21,7 +22,8 @@ app.use(cookieParser());
 
 passportConfig();
 
-app.use('/signIn', authRouter);
+app.use('/signIn', signInRouter);
+app.use('/auth', passport.authenticate('jwt', { session: false }), authRouter);
 
 app.use((req, res) => {
   res.status(404).send('error');
