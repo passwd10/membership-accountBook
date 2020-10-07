@@ -19,6 +19,8 @@ db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
 db.Users = require('./users')(sequelize, Sequelize);
+db.Categories = require('./categories')(sequelize, Sequelize);
+
 
 sequelize.sync();
 
