@@ -2,10 +2,6 @@ import axios from 'axios';
 
 const URL = 'http://localhost:3000';
 
-const token = document.cookie.split('=')[1];
-
-axios.defaults.headers.common['Authorization'] = token;
-
 const dummyData = {
   type: 'expenditure',
   date: new Date(),
