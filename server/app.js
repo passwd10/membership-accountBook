@@ -5,11 +5,12 @@ const cors = require('cors');
 const passport = require('passport');
 const passportConfig = require('./passport');
 
-const authRouter = require('./routes/auth');
+const extractUserInfo = require('./middlewares/extractUserInfo');
 const signInRouter = require('./routes/signIn');
 const transactionsInRouter = require('./routes/transactions');
 
 const app = express();
+const auth = passport.authenticate('jwt', { session: false });
 
 app.use(logger('dev'));
 app.use(cors({
@@ -22,10 +23,8 @@ app.use(cookieParser());
 app.use(passport.initialize());
 passportConfig();
 
-const auth = passport.authenticate('jwt', { session: false });
-
+app.use(extractUserInfo);
 app.use('/signIn', signInRouter);
-app.use('/auth', auth, authRouter);
 app.use('/transactions', auth, transactionsInRouter);
 
 app.use((req, res) => {

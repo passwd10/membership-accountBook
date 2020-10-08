@@ -1,6 +1,7 @@
 const passport = require('passport');
+
 const { Strategy: LocalStrategy } = require('passport-local');
-const { ExtractJwt, Strategy: JWTStrategy } = require('passport-jwt');
+const { Strategy: JWTStrategy } = require('passport-jwt');
 
 const { Users } = require('../models');
 
@@ -11,8 +12,12 @@ const passportConfig = {
   passwordField: 'userPassword',
 };
 
+const extractCookie = (req) => {
+  return req.cookies.token;
+};
+
 const JWTConfig = {
-  jwtFromRequest: ExtractJwt.fromHeader('authorization'),
+  jwtFromRequest: extractCookie,
   secretOrKey: process.env.JWT_SECRET,
 };
 
