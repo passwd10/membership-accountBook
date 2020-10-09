@@ -23,9 +23,9 @@ const Categories = require('./categories')(sequelize, Sequelize);
 const PaymentMethods = require('./paymentMethods')(sequelize, Sequelize);
 const Transactions = require('./transactions')(sequelize, Sequelize);
 
-Transactions.belongsTo(Users);
-Transactions.belongsTo(Categories);
-Transactions.belongsTo(PaymentMethods);
+Transactions.belongsTo(Users, { foreignKey: 'id' });
+Transactions.belongsTo(Categories, { foreignKey: 'id' });
+Transactions.belongsTo(PaymentMethods, { foreignKey: 'id' });
 
 db.Users = Users;
 db.Categories = Categories;
