@@ -4,7 +4,6 @@ const URL = 'http://localhost:3000';
 
 const dummyData = {
   type: 'expenditure',
-  date: new Date(),
   money: '10000',
   content: '점심식사!!',
   paymentMethod: '현금',
