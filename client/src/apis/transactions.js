@@ -23,4 +23,16 @@ const addTransactions = async () => {
   }
 };
 
-export { addTransactions };
+const getTransactions = async (month, category) => {
+  try {
+    const data = await axios.get(`${URL}/transactions/breakdown?month=${month}&category=${category}`,
+      { withCredentials: true });
+    return data;
+
+  } catch (error) {
+    console.error('cannot get transactions');
+    return false;
+  }
+};
+
+export { addTransactions, getTransactions };
