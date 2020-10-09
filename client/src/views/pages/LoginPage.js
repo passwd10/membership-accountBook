@@ -1,5 +1,5 @@
 import { signIn } from '../../apis/auth';
-import { addTransactions } from '../../apis/transactions';
+import { addTransactions, getTransactions } from '../../apis/transactions';
 
 export default function LoginPage() {
   const loginPage = document.createElement('div');
@@ -23,13 +23,29 @@ export default function LoginPage() {
       <button class='sign_button sign_up'>
         회원가입
       </button>
-      <button class='test'>
-        TEST
-      </button>
+      <div>
+        <button class='add_transaction_button'>
+          거래내역 추가
+        </button>
+      </div>
+      <div>
+        <input
+          class='date_input'
+          placeholder='ex) 202010'
+        />
+        <input
+          class='category_input'
+          placeholder='ex) 식비'
+        />
+        <button class='get_transactions_button'>
+          거래내역 받아오기
+        </button>
+      </div>
     `;
 
     const loginButton = loginPage.querySelector('.sign_in');
-    const testButton = loginPage.querySelector('.test');
+    const addTransactionButton = loginPage.querySelector('.add_transaction_button');
+    const getTransactionsButton = loginPage.querySelector('.get_transactions_button');
 
     const loginEvent = async () => {
       const userInfo = { userId: '', userPassword: '' };
@@ -49,12 +65,19 @@ export default function LoginPage() {
       await signIn(userInfo);
     };
 
-    const testEvent = async () => {
+    const addTransactionEvent = async () => {
       await addTransactions();
     };
 
+    const getTransactionsEvent = async () => {
+      const yearMonth = document.querySelector('.date_input').value;
+      const category = document.querySelector('.category_input').value;
+      await getTransactions(yearMonth, category);
+    };
+
     loginButton.addEventListener('click', loginEvent);
-    testButton.addEventListener('click', testEvent);
+    addTransactionButton.addEventListener('click', addTransactionEvent);
+    getTransactionsButton.addEventListener('click', getTransactionsEvent);
 
     return loginPage;
   };
