@@ -1,4 +1,5 @@
 import { signIn } from '../../apis/auth';
+import Router from '../../router';
 
 export default function LoginPage() {
   const loginPage = document.createElement('div');
@@ -20,6 +21,9 @@ export default function LoginPage() {
 
     const result = await signIn(userInfo);
     localStorage.setItem('isLogin', result);
+    if (result) {
+      Router('/');
+    }
   };
 
   const render = () => {
