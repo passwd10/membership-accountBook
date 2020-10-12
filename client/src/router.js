@@ -2,14 +2,13 @@ import LoginPage from './views/pages/LoginPage';
 import TransactionHistoryPage from './views/pages/TransactionHistoryPage';
 
 export default function Router (path) {
-  const app = document.getElementById('app');
-
   const routes = {
     '/login': LoginPage(),
     '/': TransactionHistoryPage(),
   };
 
   const render = path => {
+    const app = document.getElementById('app');
     const page = routes[path];
 
     if (!page) {
