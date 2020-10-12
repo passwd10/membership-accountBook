@@ -10,7 +10,12 @@ export default function TransactionHistoryPage() {
   const getTransactionsEvent = async () => {
     const yearMonth = document.querySelector('.date_input').value;
     const category = document.querySelector('.category_input').value;
-    await getTransactions(yearMonth, category);
+    const transactions = await getTransactions(yearMonth, category);
+
+    const transactionsList = transactionHistoryPage.querySelector('.transactions_list');
+    transactions.forEach(transaction => {
+      transactionsList.insertAdjacentHTML('afterend', `<li>${transaction.type} ${transaction.date} ${transaction.content}</li>`);
+    });
   };
 
   const render = () => {
@@ -32,6 +37,11 @@ export default function TransactionHistoryPage() {
         <button class='get_transactions_button'>
           거래내역 받아오기
         </button>
+      </div>
+      <div>
+        내역
+        <ul class='transactions_list'>
+        </ul>
       </div>
     `;
 

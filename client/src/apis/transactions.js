@@ -24,7 +24,7 @@ const addTransactions = async () => {
 
 const getTransactions = async (yearMonth, category) => {
   try {
-    const data = await axios.get(`${URL}/transactions/breakdown?yearMonth=${yearMonth}&category=${category}`,
+    const { data } = await axios.get(`${URL}/transactions/breakdown?yearMonth=${yearMonth}&category=${category}`,
       { withCredentials: true });
     return data;
 
