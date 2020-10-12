@@ -3,6 +3,25 @@ import { signIn } from '../../apis/auth';
 export default function LoginPage() {
   const loginPage = document.createElement('div');
 
+  const loginEvent = async () => {
+    const userInfo = { userId: '', userPassword: '' };
+
+    loginPage
+      .querySelectorAll('.login_input')
+      .forEach(input_data => {
+        if (input_data.className.includes('user_id')) {
+          userInfo.userId = input_data.value;
+        }
+
+        if (input_data.className.includes('user_password')) {
+          userInfo.userPassword = input_data.value;
+        }
+      });
+
+    const result = await signIn(userInfo);
+    localStorage.setItem('isLogin', result);
+  };
+
   const render = () => {
     loginPage.innerHTML = `
       <label>아이디</label>
@@ -25,25 +44,6 @@ export default function LoginPage() {
     `;
 
     const loginButton = loginPage.querySelector('.sign_in');
-
-    const loginEvent = async () => {
-      const userInfo = { userId: '', userPassword: '' };
-
-      loginPage
-        .querySelectorAll('.login_input')
-        .forEach(input_data => {
-          if (input_data.className.includes('user_id')) {
-            userInfo.userId = input_data.value;
-          }
-
-          if (input_data.className.includes('user_password')) {
-            userInfo.userPassword = input_data.value;
-          }
-        });
-
-      const result = await signIn(userInfo);
-      localStorage.setItem('isLogin', result);
-    };
 
     loginButton.addEventListener('click', loginEvent);
 
