@@ -4,8 +4,10 @@ const URL = 'http://localhost:3000';
 
 const signIn = async ({ userId, userPassword }) => {
   try {
-    const data = await axios.post(`${URL}/signIn`, { userId, userPassword }, { withCredentials: true });
-    return data;
+    const { data } = await axios.post(`${URL}/signIn`, { userId, userPassword }, { withCredentials: true });
+    if (data.result) {
+      return true;
+    }
   } catch (error) {
     console.error('login fail');
     return false;
