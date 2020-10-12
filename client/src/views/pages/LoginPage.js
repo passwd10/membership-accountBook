@@ -62,7 +62,8 @@ export default function LoginPage() {
           }
         });
 
-      await signIn(userInfo);
+      const result = await signIn(userInfo);
+      localStorage.setItem('isLogin', result);
     };
 
     const addTransactionEvent = async () => {
