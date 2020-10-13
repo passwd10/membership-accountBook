@@ -2,9 +2,19 @@ import observable from './observable';
 
 import { addTransactionsApi, getTransactionsApi } from '../apis/transactions';
 
-export default class TransactionsModel extends observable {
+class TransactionsModel extends observable {
   constructor() {
     super();
+    this.year = this.getYear();
+    this.month = this.getMonth();
+  }
+
+  getYear () {
+    return new Date().getFullYear();
+  }
+
+  getMonth() {
+    return String(new Date().getMonth() + 1).padStart(2, '0');
   }
 
   async addTransactions(transactionInfo) {
@@ -28,3 +38,7 @@ export default class TransactionsModel extends observable {
     this.notifyAll(transactions);
   }
 }
+
+const transactionsModel = new TransactionsModel();
+
+export default transactionsModel;

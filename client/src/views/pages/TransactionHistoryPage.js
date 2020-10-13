@@ -1,46 +1,16 @@
-import TransactionsModel from '../../models/transactionsModel';
+import transactionsModel from '../../models/transactionsModel';
+
+import TransactionDate from '../components/TrasactionDate';
 
 export default function TransactionHistoryPage() {
   const transactionHistoryPage = document.createElement('div');
   transactionHistoryPage.classList.add('transactionHistoryPage');
+  console.log(TransactionDate());
+  transactionHistoryPage.appendChild(TransactionDate());
 
-  const transactionsModel = new TransactionsModel();
-
-  const getYear = () => new Date().getFullYear();
-  const getMonth = () => String(new Date().getMonth() + 1).padStart(2, '0');
-
-  const DATE_INFO = {
-    YEAR: getYear(),
-    MONTH: getMonth(),
-  };
-
-  const setDateInfo = (action) => {
-    if (action === 'prev') {
-      DATE_INFO.MONTH = Number(DATE_INFO.MONTH) - 1;
-      if (DATE_INFO.MONTH < 1) {
-        DATE_INFO.YEAR -= 1;
-        DATE_INFO.MONTH = 12;
-      }
-    }
-    if (action === 'next') {
-      DATE_INFO.MONTH = Number(DATE_INFO.MONTH) + 1;
-      if (DATE_INFO.MONTH > 12) {
-        DATE_INFO.YEAR += 1;
-        DATE_INFO.MONTH = 1;
-      }
-    }
-    DATE_INFO.MONTH = String(DATE_INFO.MONTH).padStart(2, '0');
-    DATE_INFO.YEAR = String(DATE_INFO.YEAR);
-  };
-
-  const yearMonth = DATE_INFO.YEAR + DATE_INFO.MONTH;
+  const yearMonth = transactionsModel.year + transactionsModel.month;
   const template = `
     <div>
-      <div class='month_shift'>
-        <button class='month_shift_button prev'><</button>
-        ${DATE_INFO.YEAR}년 ${DATE_INFO.MONTH}월
-        <button class='month_shift_button next'>></button>
-      </div>
       <div>
         분류
         <button>수입</button>
@@ -93,46 +63,30 @@ export default function TransactionHistoryPage() {
       money: transactionHistoryPage.querySelector('#input_money').value,
       content: transactionHistoryPage.querySelector('#input_content').value,
     };
-    const yearMonth = DATE_INFO.YEAR + DATE_INFO.MONTH;
+    const yearMonth = transactionsModel.year + transactionsModel.month;
     await transactionsModel.addTransactions(inputData);
     await transactionsModel.updateTransactions('all', yearMonth);
   };
 
-  const monthShiftButtonEvent = (event) => {
-    if (event.target.classList[1] === 'next') {
-      setDateInfo('next');
-    }
-
-    if (event.target.classList[1] === 'prev') {
-      setDateInfo('prev');
-    }
-    const yearMonth = DATE_INFO.YEAR + DATE_INFO.MONTH;
-    transactionsModel.updateTransactions('all', yearMonth);
-  };
-
   const addEvents = (node) => {
     const addTransactionButton = node.querySelector('.add_transaction_button');
-    const monthShiftButton = node.querySelector('.month_shift');
 
     addTransactionButton.addEventListener('click', addTransactionEvent);
-    monthShiftButton.addEventListener('click', monthShiftButtonEvent);
   };
 
   const updateTransactionHistoryPageView = (transactions) => {
     const transactionHistoryPage = document.querySelector('.transactionHistoryPage');
-    const transactionDate = transactionHistoryPage.querySelector('.month_shift');
     const transactionsList = transactionHistoryPage.querySelector('.transactions_list');
+    const monthShift = transactionHistoryPage.querySelector('.month_shift');
 
     while (transactionsList.hasChildNodes()) {
       transactionsList.removeChild(transactionsList.firstChild);
     }
 
-    transactionDate.innerHTML = `
-      <div class='month_shift'>
-        <button class='month_shift_button prev'><</button>
-        ${DATE_INFO.YEAR}년 ${DATE_INFO.MONTH}월
-        <button class='month_shift_button next'>></button>
-      </div>
+    monthShift.innerHTML = `
+      <button class='month_shift_button prev'><</button>
+      ${transactionsModel.year}년 ${transactionsModel.month}월
+      <button class='month_shift_button next'>></button>
     `;
 
     transactions.forEach(transaction => {
@@ -143,7 +97,7 @@ export default function TransactionHistoryPage() {
   transactionsModel.subscribe(updateTransactionHistoryPageView);
 
   const render = () => {
-    transactionHistoryPage.innerHTML = template;
+    transactionHistoryPage.insertAdjacentHTML('beforeend', template);
     addEvents(transactionHistoryPage);
     transactionsModel.updateTransactions('all', yearMonth);
 
