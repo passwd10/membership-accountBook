@@ -50,7 +50,6 @@ export default function TransactionDate() {
   const updateTransactionDateView = () => {
     const transactionHistoryPage = document.querySelector('.transactionHistoryPage');
     const monthShift = transactionHistoryPage.querySelector('.month_shift');
-    console.log(transactionsModel.month);
     monthShift.innerHTML = getTemplate(transactionsModel.year, transactionsModel.month);
   };
 
