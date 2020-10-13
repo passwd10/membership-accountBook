@@ -1,7 +1,10 @@
-import { addTransactions, getTransactions } from '../../apis/transactions';
+import TransactionsModel from '../../models/transactionsModel';
 
 export default function TransactionHistoryPage() {
   const transactionHistoryPage = document.createElement('div');
+  transactionHistoryPage.classList.add('transactionHistoryPage');
+
+  const transactionsModel = new TransactionsModel();
 
   const template = `
     <div>
@@ -30,18 +33,14 @@ export default function TransactionHistoryPage() {
   `;
 
   const addTransactionEvent = async () => {
-    await addTransactions();
+    // await addTransactions();
   };
 
   const getTransactionsEvent = async () => {
     const yearMonth = document.querySelector('.date_input').value;
     const category = document.querySelector('.category_input').value;
-    const transactions = await getTransactions(yearMonth, category);
 
-    const transactionsList = transactionHistoryPage.querySelector('.transactions_list');
-    transactions.forEach(transaction => {
-      transactionsList.insertAdjacentHTML('afterend', `<li>${transaction.type} ${transaction.date} ${transaction.content}</li>`);
-    });
+    transactionsModel.updateTransactions(yearMonth, category);
   };
 
   const addEvent = (node) => {
@@ -52,9 +51,21 @@ export default function TransactionHistoryPage() {
     getTransactionsButton.addEventListener('click', getTransactionsEvent);
   };
 
+  const updateTransactionHistoryPageView = (transactions) => {
+    const transactionHistoryPage = document.querySelector('.transactionHistoryPage');
+    const transactionsList = transactionHistoryPage.querySelector('.transactions_list');
+
+    transactions.forEach(transaction => {
+      transactionsList.insertAdjacentHTML('afterend', `<li>${transaction.type} ${transaction.date} ${transaction.content}</li>`);
+    });
+  };
+
+  transactionsModel.subscribe(updateTransactionHistoryPageView);
+
   const render = () => {
     transactionHistoryPage.innerHTML = template;
     addEvent(transactionHistoryPage);
+
     return transactionHistoryPage;
   };
 

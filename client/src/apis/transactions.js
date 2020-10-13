@@ -10,7 +10,7 @@ const dummyData = {
   category: '식비',
 };
 
-const addTransactions = async () => {
+const addTransactionsApi = async () => {
   try {
     const data = await axios.post(`${URL}/transactions`,
       dummyData,
@@ -22,7 +22,7 @@ const addTransactions = async () => {
   }
 };
 
-const getTransactions = async (yearMonth, category) => {
+const getTransactionsApi = async (yearMonth, category) => {
   try {
     const { data } = await axios.get(`${URL}/transactions/breakdown?yearMonth=${yearMonth}&category=${category}`,
       { withCredentials: true });
@@ -34,4 +34,4 @@ const getTransactions = async (yearMonth, category) => {
   }
 };
 
-export { addTransactions, getTransactions };
+export { addTransactionsApi, getTransactionsApi };
