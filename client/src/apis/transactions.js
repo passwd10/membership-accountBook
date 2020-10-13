@@ -14,7 +14,7 @@ const addTransactionsApi = async (transactionInfo) => {
   }
 };
 
-const getTransactionsApi = async (yearMonth, type) => {
+const getTransactionsApi = async (type, yearMonth) => {
   try {
     const { data } = await axios.get(`${URL}/transactions/breakdown?yearMonth=${yearMonth}&type=${type}`,
       { withCredentials: true });

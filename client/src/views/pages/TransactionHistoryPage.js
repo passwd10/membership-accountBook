@@ -6,6 +6,17 @@ export default function TransactionHistoryPage() {
 
   const transactionsModel = new TransactionsModel();
 
+  const getYearMonth = () => {
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const yearMonth = `${year}${month}`;
+
+    return yearMonth;
+  };
+
+  const yearMonth = getYearMonth();
+
   const template = `
     <div>
       <div>
@@ -45,11 +56,6 @@ export default function TransactionHistoryPage() {
       </button>
     </div>
     <div>
-      <button class='get_transactions_button'>
-        거래내역 받아오기
-      </button>
-    </div>
-    <div>
       내역
       <ul class='transactions_list'>
       </ul>
@@ -66,19 +72,13 @@ export default function TransactionHistoryPage() {
       content: transactionHistoryPage.querySelector('#input_content').value,
     };
     await transactionsModel.addTransactions(inputData);
-    await transactionsModel.updateTransactions('all');
-  };
-
-  const getTransactionsEvent = async () => {
-    transactionsModel.updateTransactions('all');
+    await transactionsModel.updateTransactions('all', yearMonth);
   };
 
   const addEvent = (node) => {
     const addTransactionButton = node.querySelector('.add_transaction_button');
-    const getTransactionsButton = node.querySelector('.get_transactions_button');
 
     addTransactionButton.addEventListener('click', addTransactionEvent);
-    getTransactionsButton.addEventListener('click', getTransactionsEvent);
   };
 
   const updateTransactionHistoryPageView = (transactions) => {
@@ -99,6 +99,7 @@ export default function TransactionHistoryPage() {
   const render = () => {
     transactionHistoryPage.innerHTML = template;
     addEvent(transactionHistoryPage);
+    transactionsModel.updateTransactions('all', yearMonth);
 
     return transactionHistoryPage;
   };
