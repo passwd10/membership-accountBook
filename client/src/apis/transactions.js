@@ -2,18 +2,10 @@ import axios from 'axios';
 
 const URL = 'http://localhost:3000';
 
-const dummyData = {
-  type: 'expenditure',
-  money: '10000',
-  content: '점심식사!!',
-  paymentMethod: '현금',
-  category: '식비',
-};
-
-const addTransactions = async () => {
+const addTransactionsApi = async (transactionInfo) => {
   try {
     const data = await axios.post(`${URL}/transactions`,
-      dummyData,
+      transactionInfo,
       { withCredentials: true });
     return data;
   } catch (error) {
@@ -22,9 +14,9 @@ const addTransactions = async () => {
   }
 };
 
-const getTransactions = async (yearMonth, category) => {
+const getTransactionsApi = async (type, yearMonth) => {
   try {
-    const { data } = await axios.get(`${URL}/transactions/breakdown?yearMonth=${yearMonth}&category=${category}`,
+    const { data } = await axios.get(`${URL}/transactions/breakdown?yearMonth=${yearMonth}&type=${type}`,
       { withCredentials: true });
     return data;
 
@@ -34,4 +26,4 @@ const getTransactions = async (yearMonth, category) => {
   }
 };
 
-export { addTransactions, getTransactions };
+export { addTransactionsApi, getTransactionsApi };

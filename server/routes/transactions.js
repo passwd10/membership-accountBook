@@ -4,8 +4,8 @@ const router = express.Router();
 const { addTransaction, getTransactions } = require('../services/transactions');
 
 router.get('/breakdown', async (req, res) => {
-  const { yearMonth, category } = req.query;
-  const transactions = await getTransactions(yearMonth, category);
+  const { yearMonth, type } = req.query;
+  const transactions = await getTransactions(yearMonth, type);
 
   res.json(transactions);
 });
