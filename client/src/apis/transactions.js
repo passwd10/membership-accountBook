@@ -2,18 +2,10 @@ import axios from 'axios';
 
 const URL = 'http://localhost:3000';
 
-const dummyData = {
-  type: 'expenditure',
-  money: '10000',
-  content: '저녁식사!!',
-  paymentMethod: '현금',
-  category: '식비',
-};
-
-const addTransactionsApi = async () => {
+const addTransactionsApi = async (transactionInfo) => {
   try {
     const data = await axios.post(`${URL}/transactions`,
-      dummyData,
+      transactionInfo,
       { withCredentials: true });
     return data;
   } catch (error) {
