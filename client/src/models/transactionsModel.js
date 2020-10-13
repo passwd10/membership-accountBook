@@ -7,7 +7,19 @@ export default class TransactionsModel extends observable {
     super();
   }
 
-  async updateTransactions(yearMonth, category) {
+  async addTransactions() {
+    await addTransactionsApi();
+  }
+
+  async updateTransactions(category, anotherYearMonth) {
+    let yearMonth = anotherYearMonth;
+
+    if (!anotherYearMonth) {
+      const date = new Date();
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      yearMonth = `${year}${month}`;
+    }
     const transactions = await getTransactionsApi(yearMonth, category);
     this.notifyAll(transactions);
   }

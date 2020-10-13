@@ -13,14 +13,6 @@ export default function TransactionHistoryPage() {
       </button>
     </div>
     <div>
-      <input
-        class='date_input'
-        placeholder='ex) 202010'
-      />
-      <input
-        class='category_input'
-        placeholder='ex) 식비'
-      />
       <button class='get_transactions_button'>
         거래내역 받아오기
       </button>
@@ -34,13 +26,11 @@ export default function TransactionHistoryPage() {
 
   const addTransactionEvent = async () => {
     // await addTransactions();
+    transactionsModel.updateTransactions('식비');
   };
 
   const getTransactionsEvent = async () => {
-    const yearMonth = document.querySelector('.date_input').value;
-    const category = document.querySelector('.category_input').value;
-
-    transactionsModel.updateTransactions(yearMonth, category);
+    transactionsModel.updateTransactions('식비');
   };
 
   const addEvent = (node) => {
