@@ -5,12 +5,11 @@ const { Transactions, Categories, PaymentMethods } = require('../models');
 
 require('dotenv').config();
 
-const addTransaction = async({ type, money, content, paymentMethod, category, userId }) => {
+const addTransaction = async({ type, money, content, paymentMethod, category, userId, date }) => {
   try {
     const randomId = Math.floor(Math.random() * 100000);
     const paymentMethodId = [await PaymentMethods.findOne({ where: { title: paymentMethod } })][0].id;
     const categoryId = [await Categories.findOne({ where: { title: category } })][0].id;
-    const date = new Date();
 
     await Transactions.create({
       id: randomId,
@@ -29,24 +28,26 @@ const addTransaction = async({ type, money, content, paymentMethod, category, us
   }
 };
 
-const getTransactions = async(yearMonth, category) => {
-  const categoryId = [await Categories.findOne({ where: { title: category } })][0].id;
+const getTransactions = async(yearMonth, type) => {
   const year = yearMonth.slice(0, 4);
   const month = yearMonth.slice(4);
-  const startYearMonthCriteria = new Date(year, month - 1, 2, 0, 0, 0);
-  const endYearMonthCriteria = new Date(year, month, 1, 0, 0, 0);
-
-  console.log(startYearMonthCriteria, endYearMonthCriteria);
+  const startYearMonthCriteria = new Date(year, month - 1, 2, -15, 0, 0);
+  const endYearMonthCriteria = new Date(year, month, 1, -15, 0, 0);
   try {
-    const transactions = await Transactions.findAll({
+    const searchOption = {
       where: {
         date: {
           [Op.gte]: startYearMonthCriteria,
           [Op.lte]: endYearMonthCriteria,
         },
-        categories_id: categoryId,
       },
-    });
+    };
+
+    if (type !== 'all') {
+      searchOption.where.type = type;
+    }
+
+    const transactions = await Transactions.findAll(searchOption);
     return transactions;
   } catch {
     return false;
