@@ -5,7 +5,6 @@ import TransactionDate from '../components/TrasactionDate';
 export default function TransactionHistoryPage() {
   const transactionHistoryPage = document.createElement('div');
   transactionHistoryPage.classList.add('transactionHistoryPage');
-  console.log(TransactionDate());
   transactionHistoryPage.appendChild(TransactionDate());
 
   const yearMonth = transactionsModel.year + transactionsModel.month;
@@ -77,17 +76,10 @@ export default function TransactionHistoryPage() {
   const updateTransactionHistoryPageView = (transactions) => {
     const transactionHistoryPage = document.querySelector('.transactionHistoryPage');
     const transactionsList = transactionHistoryPage.querySelector('.transactions_list');
-    const monthShift = transactionHistoryPage.querySelector('.month_shift');
 
     while (transactionsList.hasChildNodes()) {
       transactionsList.removeChild(transactionsList.firstChild);
     }
-
-    monthShift.innerHTML = `
-      <button class='month_shift_button prev'><</button>
-      ${transactionsModel.year}년 ${transactionsModel.month}월
-      <button class='month_shift_button next'>></button>
-    `;
 
     transactions.forEach(transaction => {
       transactionsList.insertAdjacentHTML('afterbegin', `<li>${transaction.type} ${transaction.date} ${transaction.content}</li>`);

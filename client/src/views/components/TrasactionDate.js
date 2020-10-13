@@ -4,11 +4,13 @@ export default function TransactionDate() {
   const transactionDate = document.createElement('div');
   transactionDate.classList.add('month_shift');
 
-  const template = `
-    <button class='month_shift_button prev'><</button>
-    ${transactionsModel.year}년 ${transactionsModel.month}월
-    <button class='month_shift_button next'>></button>
-  `;
+  const getTemplate = (year, month) => {
+    return `
+      <button class='month_shift_button prev'><</button>
+      ${year}년 ${month}월
+      <button class='month_shift_button next'>></button>
+    `;
+  };
 
   const setDateInfo = (action) => {
     if (action === 'prev') {
@@ -45,8 +47,17 @@ export default function TransactionDate() {
     transactionDate.addEventListener('click', monthShiftButtonEvent);
   };
 
+  const updateTransactionDateView = () => {
+    const transactionHistoryPage = document.querySelector('.transactionHistoryPage');
+    const monthShift = transactionHistoryPage.querySelector('.month_shift');
+    console.log(transactionsModel.month);
+    monthShift.innerHTML = getTemplate(transactionsModel.year, transactionsModel.month);
+  };
+
+  transactionsModel.subscribe(updateTransactionDateView);
+
   const render = () => {
-    transactionDate.innerHTML = template;
+    transactionDate.innerHTML = getTemplate(transactionsModel.year, transactionsModel.month);
     addEvents();
     return transactionDate;
   };
