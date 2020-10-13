@@ -4,6 +4,26 @@ import Router from '../../router';
 export default function LoginPage() {
   const loginPage = document.createElement('div');
 
+  const template = `
+    <label>아이디</label>
+    <input
+      class='login_input user_id'
+      placeholder='아이디를 입력하세요'
+    />
+    <label>비밀번호</label>
+    <input
+      class='login_input user_password'
+      type='password'
+      placeholder='비밀번호를 입력하세요'
+    />
+    <button class='sign_button sign_in'>
+      로그인
+    </button>
+    <button class='sign_button sign_up'>
+      회원가입
+    </button>
+  `;
+
   const loginEvent = async () => {
     const userInfo = { userId: '', userPassword: '' };
 
@@ -26,31 +46,15 @@ export default function LoginPage() {
     }
   };
 
-  const render = () => {
-    loginPage.innerHTML = `
-      <label>아이디</label>
-      <input
-        class='login_input user_id'
-        placeholder='아이디를 입력하세요'
-      />
-      <label>비밀번호</label>
-      <input
-        class='login_input user_password'
-        type='password'
-        placeholder='비밀번호를 입력하세요'
-      />
-      <button class='sign_button sign_in'>
-        로그인
-      </button>
-      <button class='sign_button sign_up'>
-        회원가입
-      </button>
-    `;
-
-    const loginButton = loginPage.querySelector('.sign_in');
+  const addEvent = (node) => {
+    const loginButton = node.querySelector('.sign_in');
 
     loginButton.addEventListener('click', loginEvent);
+  };
 
+  const render = () => {
+    loginPage.innerHTML = template;
+    addEvent(loginPage);
     return loginPage;
   };
 
