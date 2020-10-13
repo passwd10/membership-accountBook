@@ -1,11 +1,18 @@
 const express = require('express');
 const router = express.Router();
 
-const { addTransaction } = require('../services/transactions');
+const { addTransaction, getTransactions } = require('../services/transactions');
+
+router.get('/breakdown', async (req, res) => {
+  const { yearMonth, category } = req.query;
+  const transactions = await getTransactions(yearMonth, category);
+
+  res.json(transactions);
+});
 
 router.post('/', async (req, res) => {
   const transactions = req.body;
-  const completeToAdd = await addTransaction(transactions);
+  const completeToAdd = await addTransaction({ ...transactions, userId: req.userId });
   const completeStatus = completeToAdd ? 'succeed' : 'failure';
 
   res.json({ result: completeStatus });

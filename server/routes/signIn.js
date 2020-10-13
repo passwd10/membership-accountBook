@@ -25,8 +25,8 @@ router.post('/', async(req, res, next) => {
           auth: user.auth,
         }, process.env.JWT_SECRET);
 
-        res.cookie('token', token);
-        res.json({ token });
+        res.cookie('token', token, { httpOnly: true });
+        res.json({ result: '로그인 성공' });
       });
     })(req, res);
   } catch (error) {
@@ -34,6 +34,5 @@ router.post('/', async(req, res, next) => {
     next(error);
   }
 });
-
 
 module.exports = router;

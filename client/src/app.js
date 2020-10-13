@@ -1,6 +1,6 @@
-import LoginPage from './views/pages/LoginPage';
+import Router from './router';
 
 (() => {
-  const app = document.getElementById('app');
-  app.appendChild(LoginPage());
+  const isLogin = localStorage.getItem('isLogin');
+  return isLogin ? Router('/') : Router('/login');
 })();

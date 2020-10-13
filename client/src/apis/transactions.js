@@ -2,13 +2,8 @@ import axios from 'axios';
 
 const URL = 'http://localhost:3000';
 
-const token = document.cookie.split('=')[1];
-
-axios.defaults.headers.common['Authorization'] = token;
-
 const dummyData = {
   type: 'expenditure',
-  date: new Date(),
   money: '10000',
   content: '점심식사!!',
   paymentMethod: '현금',
@@ -27,4 +22,16 @@ const addTransactions = async () => {
   }
 };
 
-export { addTransactions };
+const getTransactions = async (yearMonth, category) => {
+  try {
+    const { data } = await axios.get(`${URL}/transactions/breakdown?yearMonth=${yearMonth}&category=${category}`,
+      { withCredentials: true });
+    return data;
+
+  } catch (error) {
+    console.error('cannot get transactions');
+    return false;
+  }
+};
+
+export { addTransactions, getTransactions };

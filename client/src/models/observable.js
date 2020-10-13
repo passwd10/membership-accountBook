@@ -1,4 +1,4 @@
-class Observable {
+export default class Observable {
   constructor() {
     this._observers = new Set();
   }
@@ -8,7 +8,7 @@ class Observable {
   unsubscribe(observer) {
     this._observers = [...this._observers].filter(subscriber => subscriber !== observer);
   }
-  notify(data) {
+  notifyAll(data) {
     this._observers.forEach(observer => observer(data));
   }
 }
