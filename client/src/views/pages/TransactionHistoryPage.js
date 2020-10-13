@@ -6,24 +6,40 @@ export default function TransactionHistoryPage() {
 
   const transactionsModel = new TransactionsModel();
 
-  const getYearMonth = () => {
-    const date = new Date();
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const yearMonth = `${year}${month}`;
+  const getYear = () => new Date().getFullYear();
+  const getMonth = () => String(new Date().getMonth() + 1).padStart(2, '0');
 
-    return yearMonth;
+  const DATE_INFO = {
+    YEAR: getYear(),
+    MONTH: getMonth(),
   };
 
-  const yearMonth = getYearMonth();
-  const year = yearMonth.slice(0, 4);
-  const month = yearMonth.slice(4, 6);
+  const setDateInfo = (action) => {
+    if (action === 'prev') {
+      DATE_INFO.MONTH = Number(DATE_INFO.MONTH) - 1;
+      if (DATE_INFO.MONTH < 1) {
+        DATE_INFO.YEAR -= 1;
+        DATE_INFO.MONTH = 12;
+      }
+    }
+    if (action === 'next') {
+      DATE_INFO.MONTH = Number(DATE_INFO.MONTH) + 1;
+      if (DATE_INFO.MONTH > 12) {
+        DATE_INFO.YEAR += 1;
+        DATE_INFO.MONTH = 1;
+      }
+    }
+    DATE_INFO.MONTH = String(DATE_INFO.MONTH).padStart(2, '0');
+    DATE_INFO.YEAR = String(DATE_INFO.YEAR);
+  };
+
+  const yearMonth = DATE_INFO.YEAR + DATE_INFO.MONTH;
   const template = `
     <div>
       <div class='month_shift'>
-        <button class='month_shift_button before'><</button>
-        ${year}년 ${month}월
-        <button class='month_shift_button after'>></button>
+        <button class='month_shift_button prev'><</button>
+        ${DATE_INFO.YEAR}년 ${DATE_INFO.MONTH}월
+        <button class='month_shift_button next'>></button>
       </div>
       <div>
         분류
@@ -77,21 +93,24 @@ export default function TransactionHistoryPage() {
       money: transactionHistoryPage.querySelector('#input_money').value,
       content: transactionHistoryPage.querySelector('#input_content').value,
     };
+    const yearMonth = DATE_INFO.YEAR + DATE_INFO.MONTH;
     await transactionsModel.addTransactions(inputData);
     await transactionsModel.updateTransactions('all', yearMonth);
   };
 
   const monthShiftButtonEvent = (event) => {
-    if (event.target.classList[1] === 'after') {
-      console.log('after');
+    if (event.target.classList[1] === 'next') {
+      setDateInfo('next');
     }
 
-    if (event.target.classList[1] === 'before') {
-      console.log('before');
+    if (event.target.classList[1] === 'prev') {
+      setDateInfo('prev');
     }
+    const yearMonth = DATE_INFO.YEAR + DATE_INFO.MONTH;
+    transactionsModel.updateTransactions('all', yearMonth);
   };
 
-  const addEvent = (node) => {
+  const addEvents = (node) => {
     const addTransactionButton = node.querySelector('.add_transaction_button');
     const monthShiftButton = node.querySelector('.month_shift');
 
@@ -101,11 +120,20 @@ export default function TransactionHistoryPage() {
 
   const updateTransactionHistoryPageView = (transactions) => {
     const transactionHistoryPage = document.querySelector('.transactionHistoryPage');
+    const transactionDate = transactionHistoryPage.querySelector('.month_shift');
     const transactionsList = transactionHistoryPage.querySelector('.transactions_list');
 
     while (transactionsList.hasChildNodes()) {
       transactionsList.removeChild(transactionsList.firstChild);
     }
+
+    transactionDate.innerHTML = `
+      <div class='month_shift'>
+        <button class='month_shift_button prev'><</button>
+        ${DATE_INFO.YEAR}년 ${DATE_INFO.MONTH}월
+        <button class='month_shift_button next'>></button>
+      </div>
+    `;
 
     transactions.forEach(transaction => {
       transactionsList.insertAdjacentHTML('afterbegin', `<li>${transaction.type} ${transaction.date} ${transaction.content}</li>`);
@@ -116,7 +144,7 @@ export default function TransactionHistoryPage() {
 
   const render = () => {
     transactionHistoryPage.innerHTML = template;
-    addEvent(transactionHistoryPage);
+    addEvents(transactionHistoryPage);
     transactionsModel.updateTransactions('all', yearMonth);
 
     return transactionHistoryPage;
