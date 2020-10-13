@@ -16,9 +16,15 @@ export default function TransactionHistoryPage() {
   };
 
   const yearMonth = getYearMonth();
-
+  const year = yearMonth.slice(0, 4);
+  const month = yearMonth.slice(4, 6);
   const template = `
     <div>
+      <div class='month_shift'>
+        <button class='month_shift_button before'><</button>
+        ${year}년 ${month}월
+        <button class='month_shift_button after'>></button>
+      </div>
       <div>
         분류
         <button>수입</button>
@@ -75,10 +81,22 @@ export default function TransactionHistoryPage() {
     await transactionsModel.updateTransactions('all', yearMonth);
   };
 
+  const monthShiftButtonEvent = (event) => {
+    if (event.target.classList[1] === 'after') {
+      console.log('after');
+    }
+
+    if (event.target.classList[1] === 'before') {
+      console.log('before');
+    }
+  };
+
   const addEvent = (node) => {
     const addTransactionButton = node.querySelector('.add_transaction_button');
+    const monthShiftButton = node.querySelector('.month_shift');
 
     addTransactionButton.addEventListener('click', addTransactionEvent);
+    monthShiftButton.addEventListener('click', monthShiftButtonEvent);
   };
 
   const updateTransactionHistoryPageView = (transactions) => {
