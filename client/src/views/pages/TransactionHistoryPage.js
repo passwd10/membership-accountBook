@@ -1,6 +1,6 @@
 import transactionsModel from '../../models/transactionsModel';
 
-import TransactionDate from '../components/TrasactionDate';
+import TransactionDate from '../components/TransactionDate';
 
 export default function TransactionHistoryPage() {
   const transactionHistoryPage = document.createElement('div');
