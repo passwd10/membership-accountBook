@@ -2,5 +2,5 @@ import Router from './router';
 
 (() => {
   const isLogin = localStorage.getItem('isLogin');
-  return isLogin ? Router('/') : Router('/login');
+  return isLogin === 'true' ? Router('/') : Router('/login');
 })();
