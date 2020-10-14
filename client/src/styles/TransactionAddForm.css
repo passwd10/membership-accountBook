@@ -1,0 +1,51 @@
+.transaction_add_form {
+  display: flex;
+  justify-content: center;
+}
+
+.transaction_add_form > section {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.add_form_classification {
+  width: 100%;
+  margin: 5px 0;
+}
+
+.add_form_first_input {
+  width: 100%;
+  margin: 5px 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+#select_payment_methods, #select_categories {
+  width: 200px;
+}
+
+#input_money, #input_content {
+  width: 320px;
+  text-align: center;
+  font-size: 15px;
+}
+
+.add_form_second_input {
+  width: 100%;
+  margin: 5px 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.add_transaction_button {
+  background: #04c584;
+  border: none;
+  color: aliceblue;
+  font-size: 15px;
+  padding: 5px 0;
+  border-radius: 5px;
+  width: 100%;
+  margin: 10px 0;
+}

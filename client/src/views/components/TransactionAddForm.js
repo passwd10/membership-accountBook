@@ -2,42 +2,56 @@ import transactionsModel from '../../models/transactionsModel';
 
 import { selector } from '../../utils/querySelector';
 
+import '../../styles/TransactionAddForm.css';
+
 const getTemplate = () => `
-  <div>
+<section>
+  <div class='add_form_classification'>
     분류
     <button>수입</button>
     <button>지출</button>
   </div>
-  <div>
-    <span>날짜</span>
-    <input type='date' id='input_date'/>
+  <div class='add_form_first_input'>
+    <span class='form_date'>
+      <span>날짜</span>
+      <input type='date' id='input_date'/>
+    </span>
+    <span class='form_category'>
     <span>카테고리</span>
-    <select id='select_categories'>
-      <option>생활</option>
-      <option>쇼핑</option>
-      <option>카페/간식</option>
-      <option>문화/여가</option>
-      <option>월급</option>
-      <option>식비</option>
-      <option>기타</option>
-    </select>
-    <span>결제수단</span>
-    <select id='select_payment_methods'>
-      <option>현대카드</option>
-      <option>카카오체크카드</option>
-      <option>국민은행</option>
-      <option>현금</option>
-   </select>
+      <select id='select_categories'>
+        <option>생활</option>
+        <option>쇼핑</option>
+        <option>카페/간식</option>
+        <option>문화/여가</option>
+        <option>월급</option>
+        <option>식비</option>
+        <option>기타</option>
+      </select>
+    </span>
+    <span class='form_payment_method'>
+      <span>결제수단</span>
+      <select id='select_payment_methods'>
+        <option>현대카드</option>
+        <option>카카오체크카드</option>
+        <option>국민은행</option>
+        <option>현금</option>
+      </select>
+    </span>
   </div>
-  <div>
-    <span>금액</span>
-    <input id='input_money' placeholder='10000'/>
-    <span>내용</span>
-    <input id='input_content'placeholder='점심식사'/>
+  <div class='add_form_second_input'>
+    <span class='form_money'>
+      <span>금액</span>
+      <input id='input_money' placeholder='10000'/>
+    </span>
+    <span class='form_content'>
+      <span>내용</span>
+      <input id='input_content'placeholder='점심식사'/>
+    </span>
   </div>
   <button class='add_transaction_button'>
     확인
   </button>
+</section>
 `;
 
 const addTransactionEvent = async () => {
