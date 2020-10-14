@@ -58,11 +58,13 @@ const getTemplate = () => `
 </section>
 `;
 
+let formType = '';
+
 const transactionAddEvent = async () => {
   const transactionHistoryPage = selector('.transactionHistoryPage');
   const yearMonth = transactionsModel.year + transactionsModel.month;
   const inputData = {
-    type: 'expenditure',
+    type: formType,
     date: selector('#input_date', transactionHistoryPage).value,
     category: selector('#select_categories', transactionHistoryPage).value,
     paymentMethod: selector('#select_payment_methods', transactionHistoryPage).value,
@@ -82,12 +84,13 @@ const formTypeEvent = (event) => {
   if (targetClassName === 'income') {
     expendButton.classList.remove('clicked');
     incomeButton.classList.add('clicked');
+    formType = 'income';
   }
   if (targetClassName === 'expenditure') {
     incomeButton.classList.remove('clicked');
     expendButton.classList.add('clicked');
+    formType = 'expenditure';
   }
-  console.log(incomeButton, expendButton);
 };
 
 const addEvents = (node) => {

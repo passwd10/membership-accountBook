@@ -18,6 +18,10 @@ class TransactionsModel extends observable {
   }
 
   async addTransactions(transactionInfo) {
+    if (transactionInfo.type === '') {
+      console.log('수입/지출을 선택해주세요');
+      return false;
+    }
     if (transactionInfo.date === '') {
       console.log('날짜를 잘못입력했습니다');
       return false;
