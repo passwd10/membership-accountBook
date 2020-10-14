@@ -16,14 +16,14 @@ export default function TransactionDate() {
     if (action === 'prev') {
       transactionsModel.month = Number(transactionsModel.month) - 1;
       if (transactionsModel.month < 1) {
-        transactionsModel.year -= 1;
+        transactionsModel.year = Number(transactionsModel.year) - 1;
         transactionsModel.month = 12;
       }
     }
     if (action === 'next') {
       transactionsModel.month = Number(transactionsModel.month) + 1;
       if (transactionsModel.month > 12) {
-        transactionsModel.year += 1;
+        transactionsModel.year = Number(transactionsModel.year) + 1;
         transactionsModel.month = 1;
       }
     }
