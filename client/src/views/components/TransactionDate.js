@@ -1,6 +1,6 @@
 import transactionsModel from '../../models/transactionsModel';
 
-import { selector } from '../../../utils/querySelector';
+import { selector } from '../../utils/querySelector';
 
 const getTemplate = (year, month) => {
   return `

@@ -1,6 +1,6 @@
 import transactionsModel from '../../models/transactionsModel';
 
-import { selector } from '../../../utils/querySelector';
+import { selector } from '../../utils/querySelector';
 
 const updateTransactionListsView = (transactions) => {
   const transactionHistoryPage = selector('.transactionHistoryPage');

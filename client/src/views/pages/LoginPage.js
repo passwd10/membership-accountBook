@@ -2,7 +2,7 @@ import Router from '../../router';
 
 import { signIn } from '../../apis/auth';
 
-import { selector, selectorAll } from '../../../utils/querySelector';
+import { selector, selectorAll } from '../../utils/querySelector';
 
 const getTemplate = () => `
   <label>아이디</label>
