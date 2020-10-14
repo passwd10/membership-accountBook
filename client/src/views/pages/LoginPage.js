@@ -2,6 +2,8 @@ import Router from '../../router';
 
 import { signIn } from '../../apis/auth';
 
+import { selector, selectorAll } from '../../../utils/querySelector';
+
 const getTemplate = () => `
   <label>아이디</label>
   <input
@@ -23,8 +25,8 @@ const getTemplate = () => `
 `;
 
 const loginEvent = async () => {
-  const loginPage = document.querySelector('.login_page');
-  const loginInputs = loginPage.querySelectorAll('.login_input');
+  const loginPage = selector('.login_page');
+  const loginInputs = selectorAll('.login_input', loginPage);
   const userInfo = { userId: '', userPassword: '' };
 
   loginInputs.forEach(input_data => {
@@ -46,7 +48,7 @@ const loginEvent = async () => {
 };
 
 const addEvents = (node) => {
-  const loginButton = node.querySelector('.sign_in');
+  const loginButton = selector('.sign_in', node);
 
   loginButton.addEventListener('click', loginEvent);
 };

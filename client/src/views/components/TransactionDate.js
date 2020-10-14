@@ -1,5 +1,7 @@
 import transactionsModel from '../../models/transactionsModel';
 
+import { selector } from '../../../utils/querySelector';
+
 const getTemplate = (year, month) => {
   return `
     <button class='month_shift_button prev'><</button>
@@ -44,8 +46,8 @@ const addEvents = (node) => {
 };
 
 const updateTransactionDateView = () => {
-  const transactionHistoryPage = document.querySelector('.transactionHistoryPage');
-  const monthShift = transactionHistoryPage.querySelector('.month_shift');
+  const transactionHistoryPage = selector('.transactionHistoryPage');
+  const monthShift = selector('.month_shift', transactionHistoryPage);
   monthShift.innerHTML = getTemplate(transactionsModel.year, transactionsModel.month);
 };
 

@@ -1,5 +1,7 @@
 import transactionsModel from '../../models/transactionsModel';
 
+import { selector } from '../../../utils/querySelector';
+
 const getTemplate = () => `
   <div>
     분류
@@ -39,15 +41,15 @@ const getTemplate = () => `
 `;
 
 const addTransactionEvent = async () => {
-  const transactionHistoryPage = document.querySelector('.transactionHistoryPage');
+  const transactionHistoryPage = selector('.transactionHistoryPage');
   const yearMonth = transactionsModel.year + transactionsModel.month;
   const inputData = {
     type: 'expenditure',
-    date: transactionHistoryPage.querySelector('#input_date').value,
-    category: transactionHistoryPage.querySelector('#select_categories').value,
-    paymentMethod: transactionHistoryPage.querySelector('#select_payment_methods').value,
-    money: transactionHistoryPage.querySelector('#input_money').value,
-    content: transactionHistoryPage.querySelector('#input_content').value,
+    date: selector('#input_date', transactionHistoryPage).value,
+    category: selector('#select_categories', transactionHistoryPage).value,
+    paymentMethod: selector('#select_payment_methods', transactionHistoryPage).value,
+    money: selector('#input_money', transactionHistoryPage).value,
+    content: selector('#input_content', transactionHistoryPage).value,
   };
 
   await transactionsModel.addTransactions(inputData);
@@ -55,7 +57,7 @@ const addTransactionEvent = async () => {
 };
 
 const addEvents = (node) => {
-  const addTransactionButton = node.querySelector('.add_transaction_button');
+  const addTransactionButton = selector('.add_transaction_button', node);
 
   addTransactionButton.addEventListener('click', addTransactionEvent);
 };
