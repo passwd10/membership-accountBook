@@ -1,5 +1,7 @@
 import { selector } from '../../utils/querySelector';
 
+import Router from '../../router';
+
 const getTemplate = () => `
   <ul class='navigation_menu_ul'>
     <li class='history_li'>내역</li>
@@ -16,7 +18,7 @@ const addEvents = (node) => {
 const navigationEvents = (event) => {
   const className = event.target.className;
   if (className === 'history_li') {
-
+    Router('/history');
   }
 
   if (className === 'calendar_li') {

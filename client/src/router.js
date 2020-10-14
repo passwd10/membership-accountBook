@@ -4,7 +4,7 @@ import TransactionHistoryPage from './views/pages/TransactionHistoryPage';
 export default function Router (path) {
   const routes = {
     '/login': LoginPage(),
-    '/': TransactionHistoryPage(),
+    '/history': TransactionHistoryPage(),
   };
 
   const render = path => {
