@@ -2,12 +2,12 @@ import transactionsModel from '../../models/transactionsModel';
 
 const updateTransactionListsView = (transactions) => {
   const transactionHistoryPage = document.querySelector('.transactionHistoryPage');
-  const transactionsList = transactionHistoryPage.querySelector('.transactions_list');
+  const transactionLists = transactionHistoryPage.querySelector('.transaction_lists');
   const template = transactions.reduce((acc, transaction) => {
     return acc += `<li>${transaction.type} ${transaction.date} ${transaction.content}</li>`;
   }, '');
 
-  transactionsList.innerHTML = template;
+  transactionLists.innerHTML = template;
 };
 
 export default function TransactionLists() {
