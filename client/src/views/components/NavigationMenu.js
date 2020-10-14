@@ -22,7 +22,7 @@ const navigationEvents = (event) => {
   }
 
   if (className === 'calendar_li') {
-
+    Router('/calendar');
   }
 
   if (className === 'statistics_li') {
