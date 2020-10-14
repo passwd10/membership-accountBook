@@ -22,20 +22,23 @@ const getTransactionListsTemplate = (allTransactions) => {
   let template = '';
   for (const date in allTransactions) {
     template += `<li class='transaction_list_date'>${date}</li>`;
-    template += allTransactions[date].reduce((acc, transaction) => acc += listTemplate(transaction), '');
+    template += allTransactions[date].reduce((acc, transaction) => acc += getListTemplate(transaction), '');
   }
   return `<ul>${template}</ul>`;
 };
 
-const listTemplate = (transaction) => {
-  return `
-    <li class='transaction_list ${transaction.id}'>
-      <span class='transaction_list_detail category'>${transaction.category.title}</span>
-      <span class='transaction_list_detail content'>${transaction.content}</span>
-      <span class='transaction_list_detail payment_method'>${transaction.payment_method.title}</span>
-      <span class='transaction_list_detail money'>-${transaction.money}원</span>
-    </li>
-    `;
+const getListTemplate = (transaction) => {
+  let listTemplate = '';
+  listTemplate += `<li class='transaction_list ${transaction.id}'>`;
+  listTemplate += transaction.type === 'expenditure' ?
+    `<span class='transaction_list_detail category_expenditure'>${transaction.category.title}</span>` :
+    `<span class='transaction_list_detail category_income'>${transaction.category.title}</span>`;
+  listTemplate += `<span class='transaction_list_detail content'>${transaction.content}</span>
+      <span class='transaction_list_detail payment_method'>${transaction.payment_method.title}</span>`;
+  listTemplate += transaction.type === 'expenditure' ?
+    `<span class='transaction_list_detail money_expenditure'>-${transaction.money}원</span></li>` :
+    `<span class='transaction_list_detail money_income'>+${transaction.money}원</span></li>`;
+  return listTemplate;
 };
 
 const updateTransactionListsView = (transactions) => {

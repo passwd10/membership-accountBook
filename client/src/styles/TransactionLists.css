@@ -28,11 +28,20 @@
   font-size: 15px;
 }
 
-.category {
+.category_expenditure {
   display: inline-block;
   text-align: center;
   width: 80px;
   background: #04c584;
+  color: white;
+  border-radius: 50px;
+}
+
+.category_income {
+  display: inline-block;
+  text-align: center;
+  width: 80px;
+  background: #1E90FF;
   color: white;
   border-radius: 50px;
 }
@@ -49,11 +58,20 @@
   width: 100px;
 }
 
-.money {
+.money_expenditure {
   display: inline-block;
   text-align: right;
   width: 100px;
   color: #04c584;
+  font-size: 17px;
+  font-weight: bold;
+}
+
+.money_income {
+  display: inline-block;
+  text-align: right;
+  width: 100px;
+  color: #1E90FF;
   font-size: 17px;
   font-weight: bold;
 }
