@@ -35,6 +35,16 @@ const getTransactions = async(yearMonth, type) => {
   const endYearMonthCriteria = new Date(year, month, 1, -15, 0, 0);
   try {
     const searchOption = {
+      include: [
+        {
+          model: Categories,
+          attributes: ['title'],
+        },
+        {
+          model: PaymentMethods,
+          attributes: ['title'],
+        },
+      ],
       where: {
         date: {
           [Op.gte]: startYearMonthCriteria,
