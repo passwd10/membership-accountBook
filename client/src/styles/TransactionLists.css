@@ -1,0 +1,59 @@
+.transaction_lists {
+  display: flex;
+  justify-content: center;
+}
+
+.transaction_lists > ul {
+  width: 40%;
+}
+
+.transaction_lists > ul > li {
+  list-style: none;
+}
+
+.transaction_list_date {
+  font-size: 17px;
+  border-top: 1px solid gray;
+  border-bottom: 1px solid #DCDCDC;
+  padding: 8px 0;
+}
+
+.transaction_list {
+  border-bottom : 1px solid #DCDCDC;
+}
+
+.transaction_list_detail {
+  padding: 3px 10px;
+  margin: 4px 0;
+  font-size: 15px;
+}
+
+.category {
+  display: inline-block;
+  text-align: center;
+  width: 80px;
+  background: #04c584;
+  color: white;
+  border-radius: 50px;
+}
+
+.content {
+  display: inline-block;
+  width: 350px;
+  margin: 0 0 0 20px;
+}
+
+.payment_method {
+  display: inline-block;
+  text-align: center;
+  width: 100px;
+}
+
+.money {
+  display: inline-block;
+  text-align: right;
+  width: 100px;
+  color: #04c584;
+  font-size: 17px;
+  font-weight: bold;
+}
