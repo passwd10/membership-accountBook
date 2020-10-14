@@ -10,12 +10,12 @@
   align-items: center;
 }
 
-.add_form_classification {
+.form_type {
   width: 100%;
   margin: 5px 0;
 }
 
-.add_form_first_input {
+.form_first_inputs {
   width: 100%;
   margin: 5px 0;
   display: flex;
@@ -32,14 +32,14 @@
   font-size: 15px;
 }
 
-.add_form_second_input {
+.form_second_inputs {
   width: 100%;
   margin: 5px 0;
   display: flex;
   justify-content: space-between;
 }
 
-.add_transaction_button {
+.transaction_add_button {
   background: #04c584;
   border: none;
   color: aliceblue;
@@ -48,4 +48,22 @@
   border-radius: 5px;
   width: 100%;
   margin: 10px 0;
+}
+
+.type_button {
+  background: #04c584;
+  color: white;
+  border: none;
+  padding: 2px 24px;
+  border-radius: 5px;
+  outline: none;
+}
+
+.type_button.clicked {
+  background: white;
+  color: #04c584;
+  border: #04c584 1px solid;
+  padding: 2px 24px;
+  border-radius: 5px;
+  outline: none;
 }

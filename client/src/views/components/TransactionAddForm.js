@@ -6,12 +6,16 @@ import '../../styles/TransactionAddForm.css';
 
 const getTemplate = () => `
 <section>
-  <div class='add_form_classification'>
+  <div class='form_type'>
     분류
-    <button>수입</button>
-    <button>지출</button>
+    <button class='type_button income'>
+      수입
+    </button>
+    <button class='type_button expenditure'>
+      지출
+    </button>
   </div>
-  <div class='add_form_first_input'>
+  <div class='form_first_inputs'>
     <span class='form_date'>
       <span>날짜</span>
       <input type='date' id='input_date'/>
@@ -38,7 +42,7 @@ const getTemplate = () => `
       </select>
     </span>
   </div>
-  <div class='add_form_second_input'>
+  <div class='form_second_inputs'>
     <span class='form_money'>
       <span>금액</span>
       <input id='input_money' placeholder='10000'/>
@@ -48,13 +52,13 @@ const getTemplate = () => `
       <input id='input_content'placeholder='점심식사'/>
     </span>
   </div>
-  <button class='add_transaction_button'>
+  <button class='transaction_add_button'>
     확인
   </button>
 </section>
 `;
 
-const addTransactionEvent = async () => {
+const transactionAddEvent = async () => {
   const transactionHistoryPage = selector('.transactionHistoryPage');
   const yearMonth = transactionsModel.year + transactionsModel.month;
   const inputData = {
@@ -70,10 +74,28 @@ const addTransactionEvent = async () => {
   await transactionsModel.updateTransactions('all', yearMonth);
 };
 
-const addEvents = (node) => {
-  const addTransactionButton = selector('.add_transaction_button', node);
+const formTypeEvent = (event) => {
+  const targetClassName = event.target.className.split(' ')[1];
+  const incomeButton = document.getElementsByClassName('type_button income')[0];
+  const expendButton = document.getElementsByClassName('type_button expenditure')[0];
 
-  addTransactionButton.addEventListener('click', addTransactionEvent);
+  if (targetClassName === 'income') {
+    expendButton.classList.remove('clicked');
+    incomeButton.classList.add('clicked');
+  }
+  if (targetClassName === 'expenditure') {
+    incomeButton.classList.remove('clicked');
+    expendButton.classList.add('clicked');
+  }
+  console.log(incomeButton, expendButton);
+};
+
+const addEvents = (node) => {
+  const transactionAddButton = selector('.transaction_add_button', node);
+  const formType = selector('.form_type', node);
+
+  formType.addEventListener('click', formTypeEvent);
+  transactionAddButton.addEventListener('click', transactionAddEvent);
 };
 
 export default function TransactionAddForm() {
