@@ -2,11 +2,13 @@ import transactionsModel from '../../models/transactionsModel';
 
 import { selector } from '../../utils/querySelector';
 
+import '../../styles/TransactionDate.css';
+
 const getTemplate = (year, month) => {
   return `
-    <button class='month_shift_button prev'><</button>
-    ${year}년 ${month}월
-    <button class='month_shift_button next'>></button>
+    <button class='month_shift_button prev'>◁</button>
+    <span class='year_month'>${year}년 ${month}월</span>
+    <button class='month_shift_button next'>▷</button>
   `;
 };
 
