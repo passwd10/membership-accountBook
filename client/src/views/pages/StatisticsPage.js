@@ -1,5 +1,6 @@
 import TransactionDate from '../components/TransactionDate';
 import NavigationMenu from '../components/NavigationMenu';
+import StatisticsGraph from '../components/StatisticsGraph';
 
 export default function StatisticsPage() {
   const statisticsPage = document.createElement('div');
@@ -7,6 +8,7 @@ export default function StatisticsPage() {
 
   statisticsPage.appendChild(TransactionDate());
   statisticsPage.appendChild(NavigationMenu());
+  statisticsPage.appendChild(StatisticsGraph());
 
   const render = () => {
     return statisticsPage;
