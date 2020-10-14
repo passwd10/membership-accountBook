@@ -26,7 +26,7 @@ const navigationEvents = (event) => {
   }
 
   if (className === 'statistics_li') {
-
+    Router('/statistics');
   }
 };
 

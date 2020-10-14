@@ -1,12 +1,14 @@
 import LoginPage from './views/pages/LoginPage';
 import TransactionHistoryPage from './views/pages/TransactionHistoryPage';
 import CalendarPage from './views/pages/CalendarPage';
+import StatisticsPage from './views/pages/StatisticsPage';
 
 export default function Router (path) {
   const routes = {
     '/login': LoginPage(),
     '/history': TransactionHistoryPage(),
     '/calendar': CalendarPage(),
+    '/statistics': StatisticsPage(),
   };
 
   const render = path => {
