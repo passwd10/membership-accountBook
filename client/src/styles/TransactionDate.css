@@ -1,0 +1,14 @@
+.month_shift {
+  text-align: center;
+}
+
+.month_shift_button {
+  font-size: 20px;
+  background: transparent;
+  border: none;
+}
+
+.year_month {
+  font-size: 20px;
+  font-weight: bold;
+}

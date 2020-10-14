@@ -1,6 +1,8 @@
 import Router from './router';
 
+import './styles/index.css';
+
 (() => {
   const isLogin = localStorage.getItem('isLogin');
-  return isLogin ? Router('/') : Router('/login');
+  return isLogin === 'true' ? Router('/history') : Router('/login');
 })();
