@@ -1,6 +1,7 @@
 import transactionsModel from '../../models/transactionsModel';
 
 import TransactionDate from '../components/TransactionDate';
+import TransactionLists from '../components/TransactionLists';
 
 const getTemplate = () => `
   <div>
@@ -69,28 +70,16 @@ const addEvents = (node) => {
   addTransactionButton.addEventListener('click', addTransactionEvent);
 };
 
-const updateTransactionHistoryPageView = (transactions) => {
-  const transactionHistoryPage = document.querySelector('.transactionHistoryPage');
-  const transactionsList = transactionHistoryPage.querySelector('.transactions_list');
-  const template = transactions.reduce((acc, transaction) => {
-    return acc += `<li>${transaction.type} ${transaction.date} ${transaction.content}</li>`;
-  }, '');
-
-  transactionsList.innerHTML = template;
-};
-
 export default function TransactionHistoryPage() {
-  const yearMonth = transactionsModel.year + transactionsModel.month;
   const transactionHistoryPage = document.createElement('div');
   transactionHistoryPage.classList.add('transactionHistoryPage');
-  transactionHistoryPage.appendChild(TransactionDate());
 
-  transactionsModel.subscribe(updateTransactionHistoryPageView);
+  transactionHistoryPage.appendChild(TransactionDate());
+  transactionHistoryPage.appendChild(TransactionLists());
 
   const render = () => {
     transactionHistoryPage.insertAdjacentHTML('beforeend', getTemplate());
     addEvents(transactionHistoryPage);
-    transactionsModel.updateTransactions('all', yearMonth);
 
     return transactionHistoryPage;
   };
