@@ -47,8 +47,10 @@ const addEvents = (node) => {
 
 const updateTransactionDateView = () => {
   const transactionHistoryPage = selector('.transactionHistoryPage');
-  const monthShift = selector('.month_shift', transactionHistoryPage);
-  monthShift.innerHTML = getTemplate(transactionsModel.year, transactionsModel.month);
+  if (transactionHistoryPage) {
+    const monthShift = selector('.month_shift', transactionHistoryPage);
+    monthShift.innerHTML = getTemplate(transactionsModel.year, transactionsModel.month);
+  }
 };
 
 export default function TransactionDate() {

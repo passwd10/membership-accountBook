@@ -4,12 +4,14 @@ import { selector } from '../../utils/querySelector';
 
 const updateTransactionListsView = (transactions) => {
   const transactionHistoryPage = selector('.transactionHistoryPage');
-  const transactionLists = selector('.transaction_lists', transactionHistoryPage);
-  const template = transactions.reduce((acc, transaction) => {
-    return acc += `<li>${transaction.type} ${transaction.date} ${transaction.content}</li>`;
-  }, '');
+  if (transactionHistoryPage) {
+    const transactionLists = selector('.transaction_lists', transactionHistoryPage);
+    const template = transactions.reduce((acc, transaction) => {
+      return acc += `<li>${transaction.type} ${transaction.date} ${transaction.content}</li>`;
+    }, '');
 
-  transactionLists.innerHTML = template;
+    transactionLists.innerHTML = template;
+  }
 };
 
 export default function TransactionLists() {
