@@ -1,4 +1,5 @@
 import transactionsModel from '../../models/transactionsModel';
+import transactionFormModel from '../../models/transactionFormModel';
 
 import { selector } from '../../utils/querySelector';
 
@@ -140,11 +141,29 @@ const addEvents = (node) => {
   formButtonToDelete.addEventListener('click', formButtonToDeleteEvent);
 };
 
+const updateFormView = ({ id, date, category, type, content, money, payment }) => {
+  const transactionForm = selector('.transaction_add_form');
+  if (type === 'income') {
+    transactionForm.getElementsByClassName('type_button expenditure')[0].classList.remove('clicked');
+    transactionForm.getElementsByClassName('type_button income')[0].classList.add('clicked');
+  }
+  if (type === 'expenditure') {
+    transactionForm.getElementsByClassName('type_button income')[0].classList.remove('clicked');
+    transactionForm.getElementsByClassName('type_button expenditure')[0].classList.add('clicked');
+  }
+  selector('#input_date', transactionForm).value = date;
+  selector('#input_money', transactionForm).value = money;
+  selector('#input_content', transactionForm).value = content;
+  selector('#select_categories', transactionForm).value = category;
+  selector('#select_payment_methods', transactionForm).value = payment;
+};
+
 export default function TransactionAddForm() {
   const transactionAddForm = document.createElement('div');
   transactionAddForm.classList.add('transaction_add_form');
 
   const render = () => {
+    transactionFormModel.subscribe(updateFormView);
     transactionAddForm.innerHTML = getTemplate();
     addEvents(transactionAddForm);
     return transactionAddForm;

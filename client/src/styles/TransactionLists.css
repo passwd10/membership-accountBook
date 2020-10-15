@@ -8,7 +8,7 @@
   padding: 0;
 }
 
-.transaction_lists > ul > li {
+.transaction_lists > ul > ul > li {
   list-style: none;
 }
 
