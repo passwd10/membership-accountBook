@@ -72,12 +72,16 @@ const deleteFormData = () => {
   const paymentMethod = selector('#select_payment_methods', transactionHistoryPage);
   const money = selector('#input_money', transactionHistoryPage);
   const content = selector('#input_content', transactionHistoryPage);
+  const incomeButton = transactionHistoryPage.getElementsByClassName('type_button income')[0];
+  const expendButton = transactionHistoryPage.getElementsByClassName('type_button expenditure')[0];
 
   date.value = '';
   category.value = '생활';
   paymentMethod.value = '현대카드';
   money.value = '';
   content.value = '';
+  incomeButton.classList.remove('clicked');
+  expendButton.classList.remove('clicked');
 };
 
 const transactionAddEvent = async () => {
