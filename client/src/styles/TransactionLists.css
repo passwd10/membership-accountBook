@@ -5,9 +5,10 @@
 
 .transaction_lists > ul {
   width: 40%;
+  padding: 0;
 }
 
-.transaction_lists > ul > li {
+.transaction_lists > ul > ul > li {
   list-style: none;
 }
 
@@ -20,6 +21,11 @@
 
 .transaction_list {
   border-bottom : 1px solid #DCDCDC;
+  cursor: pointer;
+}
+
+.transaction_list:hover {
+  background: #ADD8E6;
 }
 
 .transaction_list_detail {

@@ -6,6 +6,7 @@
   font-size: 20px;
   background: transparent;
   border: none;
+  cursor: pointer;
 }
 
 .year_month {

@@ -1,4 +1,5 @@
 import transactionsModel from '../../models/transactionsModel';
+import transactionFormModel from '../../models/transactionFormModel';
 
 import { selector } from '../../utils/querySelector';
 
@@ -6,6 +7,11 @@ import '../../styles/TransactionAddForm.css';
 
 const getTemplate = () => `
 <section>
+  <div class='delete_form'>
+    <button class='delete_form_button'>
+      내용 지우기
+    </button>
+  </div>
   <div class='form_type'>
     분류
     <button class='type_button income'>
@@ -60,20 +66,48 @@ const getTemplate = () => `
 
 let formType = '';
 
+const deleteFormData = () => {
+  const transactionHistoryPage = selector('.transactionHistoryPage');
+  const date = selector('#input_date', transactionHistoryPage);
+  const category = selector('#select_categories', transactionHistoryPage);
+  const paymentMethod = selector('#select_payment_methods', transactionHistoryPage);
+  const money = selector('#input_money', transactionHistoryPage);
+  const content = selector('#input_content', transactionHistoryPage);
+  const incomeButton = transactionHistoryPage.getElementsByClassName('type_button income')[0];
+  const expendButton = transactionHistoryPage.getElementsByClassName('type_button expenditure')[0];
+
+  date.value = '';
+  category.value = '생활';
+  paymentMethod.value = '현대카드';
+  money.value = '';
+  content.value = '';
+  incomeButton.classList.remove('clicked');
+  expendButton.classList.remove('clicked');
+};
+
 const transactionAddEvent = async () => {
   const transactionHistoryPage = selector('.transactionHistoryPage');
   const yearMonth = transactionsModel.year + transactionsModel.month;
+  const date = selector('#input_date', transactionHistoryPage);
+  const category = selector('#select_categories', transactionHistoryPage);
+  const paymentMethod = selector('#select_payment_methods', transactionHistoryPage);
+  const money = selector('#input_money', transactionHistoryPage);
+  const content = selector('#input_content', transactionHistoryPage);
+
   const inputData = {
     type: formType,
-    date: selector('#input_date', transactionHistoryPage).value,
-    category: selector('#select_categories', transactionHistoryPage).value,
-    paymentMethod: selector('#select_payment_methods', transactionHistoryPage).value,
-    money: selector('#input_money', transactionHistoryPage).value,
-    content: selector('#input_content', transactionHistoryPage).value,
+    date: date.value,
+    category: category.value,
+    paymentMethod: paymentMethod.value,
+    money: money.value,
+    content: content.value,
   };
 
-  await transactionsModel.addTransactions(inputData);
-  await transactionsModel.updateTransactions('all', yearMonth);
+  const result = await transactionsModel.addTransactions(inputData);
+  if (result) {
+    await transactionsModel.updateTransactions('all', yearMonth);
+    deleteFormData();
+  }
 };
 
 const formTypeEvent = (event) => {
@@ -93,12 +127,35 @@ const formTypeEvent = (event) => {
   }
 };
 
+const formButtonToDeleteEvent = () => {
+  deleteFormData();
+};
+
 const addEvents = (node) => {
   const transactionAddButton = selector('.transaction_add_button', node);
   const formType = selector('.form_type', node);
+  const formButtonToDelete = selector('.delete_form_button', node);
 
   formType.addEventListener('click', formTypeEvent);
   transactionAddButton.addEventListener('click', transactionAddEvent);
+  formButtonToDelete.addEventListener('click', formButtonToDeleteEvent);
+};
+
+const updateFormView = ({ id, date, category, type, content, money, payment }) => {
+  const transactionForm = selector('.transaction_add_form');
+  if (type === 'income') {
+    transactionForm.getElementsByClassName('type_button expenditure')[0].classList.remove('clicked');
+    transactionForm.getElementsByClassName('type_button income')[0].classList.add('clicked');
+  }
+  if (type === 'expenditure') {
+    transactionForm.getElementsByClassName('type_button income')[0].classList.remove('clicked');
+    transactionForm.getElementsByClassName('type_button expenditure')[0].classList.add('clicked');
+  }
+  selector('#input_date', transactionForm).value = date;
+  selector('#input_money', transactionForm).value = money;
+  selector('#input_content', transactionForm).value = content;
+  selector('#select_categories', transactionForm).value = category;
+  selector('#select_payment_methods', transactionForm).value = payment;
 };
 
 export default function TransactionAddForm() {
@@ -106,6 +163,7 @@ export default function TransactionAddForm() {
   transactionAddForm.classList.add('transaction_add_form');
 
   const render = () => {
+    transactionFormModel.subscribe(updateFormView);
     transactionAddForm.innerHTML = getTemplate();
     addEvents(transactionAddForm);
     return transactionAddForm;
