@@ -6,6 +6,11 @@ import '../../styles/TransactionAddForm.css';
 
 const getTemplate = () => `
 <section>
+  <div class='delete_form'>
+    <button class='delete_form_button'>
+      내용 지우기
+    </button>
+  </div>
   <div class='form_type'>
     분류
     <button class='type_button income'>
