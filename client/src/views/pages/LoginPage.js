@@ -43,7 +43,7 @@ const loginEvent = async () => {
   localStorage.setItem('isLogin', loginResult);
 
   if (loginResult) {
-    Router('/');
+    Router('/history');
   }
 };
 
